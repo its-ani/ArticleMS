@@ -6,17 +6,16 @@ spring:
       discovery:
         locator:
           enabled: true
-      server:
-        webflux:
-          routes:
-            - id: USERSERVICEJWT
-              uri: lb:http://UserServiceJWT
-              predicates:
-                - Path=/user/**,/admin/**,/auth/google/**
-#            - id: ArticleService
-#              uri: lb:http://ArticleService
-#              predicates:
-#                - Path=
+
+      routes:
+        - id: USERSERVICEJWT
+          uri: lb:http://UserServiceJWT
+          predicates:
+          - Path=/user/**,/admin/**,/auth/google/**
+        - id: ArticleService
+          uri: lb:http://ArticleService
+          predicates:
+          - Path=/article/**
 
 server:
   port: 8085

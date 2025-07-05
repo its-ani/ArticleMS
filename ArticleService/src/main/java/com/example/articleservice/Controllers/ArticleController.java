@@ -23,39 +23,39 @@ public class ArticleController {
         this.articleserviceRepository = articleserviceRepository;
     }
 
-    @GetMapping("/articleservices")
+    @GetMapping("/article")
     public ResponseEntity<List<ArticleProjection>> getAllArticles(){
         List<ArticleProjection> articleservices = articleserviceService.getAllArticles();
         ResponseEntity<List<ArticleProjection>> responseEntity = new ResponseEntity<>(articleservices , HttpStatus.OK);
         return responseEntity;
     }
 
-    @GetMapping("/articleservices/{id}")
+    @GetMapping("/article/{id}")
     public ResponseEntity<ArticleProjection> getSingleArticle(@PathVariable("id") long id){
         ArticleProjection articleservice = articleserviceService.getArticleById(id);
         ResponseEntity<ArticleProjection> responseEntity = new ResponseEntity<>(articleservice , HttpStatus.OK);
         return responseEntity;
     }
 
-    @PostMapping("/articleservices")
+    @PostMapping("/article")
     public ResponseEntity<ArticleProjection> createArticle(@RequestBody CreateArticleRequestDto createArticleRequestDto){
         ArticleProjection articleservice = articleserviceService.createArticle(createArticleRequestDto.getAuthor() , createArticleRequestDto.getTitle() , createArticleRequestDto.getContent());
         ResponseEntity<ArticleProjection> responseEntity = new ResponseEntity<>(articleservice , HttpStatus.CREATED);
         return responseEntity;
     }
 
-    @DeleteMapping("/articleservices/{id}")
+    @DeleteMapping("/article/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable("id") long id){
         ResponseEntity<Void> responseEntity = articleserviceService.deleteArticle(id);
         return responseEntity;
     }
 
-    @GetMapping("/articleservices/page")
+    @GetMapping("/article/page")
     public Pair<List<ArticleProjection> , Pair<Boolean , Integer>> getArticlePages(@RequestParam("pageNo") int pageNo , @RequestParam("pageSize") int pageSize){
         return articleserviceService.getAllArticles(pageNo , pageSize);
     }
 
-    @PatchMapping("/articleservices/{id}")
+    @PatchMapping("/article/{id}")
     public ResponseEntity<Void> updateArticle(@PathVariable("id") long id , @RequestBody CreateArticleRequestDto createArticleRequestDto){
         ResponseEntity<Void> responseEntity = articleserviceService.updateArticle(id , createArticleRequestDto.getAuthor() , createArticleRequestDto.getTitle() , createArticleRequestDto.getContent());
         return responseEntity;
