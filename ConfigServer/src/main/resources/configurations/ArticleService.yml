@@ -6,15 +6,15 @@ spring:
     username: root
     password: rootpassword
     driver-class-name: com.mysql.cj.jdbc.Driver
-    jpa:
-      hibernate:
-        ddl-auto: update
-      show-sql: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 
   eureka:
     client:
       service-url:
         defaultZone: http://localhost:8761/eureka/
 server:
-  port: 8083
+  port: 8084
 
