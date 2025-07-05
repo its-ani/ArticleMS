@@ -20,7 +20,7 @@
         </processorPath>
         <module name="ServiceDiscovery" />
       </profile>
-      <profile name="Annotation profile for UserServiceJWT" enabled="true">
+      <profile name="Annotation profile for ArticleService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

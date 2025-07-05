@@ -2,7 +2,7 @@ spring:
   application:
     name: ArticleService
   datasource:
-    url: jdbc:mysql://localhost:3307/articleSpace
+    url: jdbc:mysql://localhost:3307/articlespace
     username: root
     password: rootpassword
     driver-class-name: com.mysql.cj.jdbc.Driver
