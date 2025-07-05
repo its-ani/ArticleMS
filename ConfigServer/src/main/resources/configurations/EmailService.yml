@@ -5,10 +5,14 @@ spring:
   kafka:
     consumer:
       bootstrap-servers: localhost:9092
-      group-id: emailService
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      auto-offset-reset:earliest:
+      properties:
+        spring.json.trusted.packages: '*'
+#        spring.json.type.mapping: orderConfirmation:dev.anirudh.ecommerce.kafka.order.OrderConfirmation,paymentConfirmation:dev.anirudh.ecommerce.kafka.payment.PaymentConfirmation
+      group-id: emailService
+      auto-offset-reset: earliest
+
 server:
   port: 8081
 
@@ -20,7 +24,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 client:
-  id: ccloud-springboot-client-06c2f560-46d1-4939-962f-70ae6b18a4ce
+  id: cloud-springboot-client-06c2f560-46d1-4939-962f-70ae6b18a4ce
 
 sending-email: ${SENDINGEMAIL}
 sending-email-password: ${SENDINGEMAILPASSWORD}
