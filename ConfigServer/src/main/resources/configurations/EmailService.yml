@@ -16,12 +16,17 @@ spring:
 server:
   port: 8081
 
+
 eureka:
-  instance:
-    hostname: localhost
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${server.port}
+
+
+
 
 client:
   id: cloud-springboot-client-06c2f560-46d1-4939-962f-70ae6b18a4ce
