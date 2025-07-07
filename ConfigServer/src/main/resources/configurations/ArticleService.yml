@@ -31,3 +31,7 @@ eureka:
 
 server:
   port: 8084
+
+application:
+  config:
+    UserServiceJWT: http://localhost:8080/user

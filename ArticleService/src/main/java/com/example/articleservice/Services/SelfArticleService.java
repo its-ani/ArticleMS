@@ -1,12 +1,10 @@
 package com.example.articleservice.Services;
 
-import com.example.articleservice.Exceptions.ArticleCreationException;
+import com.example.articleservice.Dto.UserServiceDTO;
 import com.example.articleservice.Exceptions.ArticleNotFoundException;
 import com.example.articleservice.Models.Article;
-import com.example.articleservice.Models.Author;
 import com.example.articleservice.Projections.ArticleProjection;
 import com.example.articleservice.Repository.ArticleRepository;
-import com.example.articleservice.Repository.UserRepository;
 import org.springframework.data.domain.Sort;
 import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,16 +20,16 @@ import java.util.List;
 public class SelfArticleService implements ArticleService{
 
     private ArticleRepository articleRepository;
-    private UserRepository userRepository;
+    private UserService userService;
 
-    public SelfArticleService(ArticleRepository articleRepository , UserRepository userRepository){
+    public SelfArticleService(ArticleRepository articleRepository, UserService userService){
         this.articleRepository = articleRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @Override
     public List<ArticleProjection> getAllArticles() throws RuntimeException{
-        List<ArticleProjection> articles =  articleRepository.findAllProjectedBy();
+        List<ArticleProjection> articles =  articleRepository.findAllArticleById();
         if(!articles.isEmpty()) {
             return articles;
         }
@@ -40,7 +38,7 @@ public class SelfArticleService implements ArticleService{
 
     @Override
     public ArticleProjection getArticleById(String id) {
-        ArticleProjection article = articleRepository.findProjectedById(id);
+        ArticleProjection article = articleRepository.findArticleById(id);
         if(article == null){
             throw new ArticleNotFoundException();
         }
@@ -48,24 +46,22 @@ public class SelfArticleService implements ArticleService{
     }
 
     @Override
-    public ArticleProjection createArticle(Author userName, String title, String content) {
-        Author author = userRepository.findByName(userName.getName());
-        if (author == null) {
-            author = new Author();
-            author.setName(userName.getName());
-            author = userRepository.save(author);
-        }
+    public ArticleProjection createArticle(String userEmail, String title, String content) {
+        ResponseEntity<UserServiceDTO> userServiceDto =  userService.getUser(userEmail);
+        String userName = userServiceDto.getBody().getName();
 
         Article article = new Article();
-        article.setTitle(title);
-        article.setContent(content);
-        article.setAuthor(author);
+        article.setArticleTitle(title);
+        article.setArticleContent(content);
+        article.setUserEmail(userEmail);
+        article.setUserName(userName);
         articleRepository.save(article);
 
-        ArticleProjection createdArticle = articleRepository.findProjectedById(article.getId());
-        if (createdArticle == null) {
-            throw new ArticleCreationException();
-        }
+        ArticleProjection createdArticle = ArticleProjection.builder()
+                .userName(userName)
+                .title(title)
+                .content(content)
+                .build();
 
         return createdArticle;
     }
@@ -91,11 +87,11 @@ public class SelfArticleService implements ArticleService{
     }
 
     @Override
-    public ResponseEntity<Void> updateArticle(String id , Author author , String title , String content){
+    public ResponseEntity<Void> updateArticle(String id , String authorEmail , String title , String content){
         if(articleRepository.existsByIdAndIsDeletedFalse(id)){
             Article article = articleRepository.findById(id);
-            article.setTitle(title);
-            article.setContent(content);
+            article.setArticleTitle(title);
+            article.setArticleContent(content);
             article.setUpdatedAt(LocalDateTime.now());
             articleRepository.save(article);
             return new ResponseEntity<>(HttpStatus.OK);

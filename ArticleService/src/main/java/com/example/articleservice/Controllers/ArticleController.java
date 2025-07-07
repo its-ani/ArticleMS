@@ -16,11 +16,9 @@ import java.util.List;
 @RestController
 public class ArticleController {
 
-    private final ArticleRepository articleserviceRepository;
     public ArticleService articleserviceService;
-    public ArticleController(ArticleService articleserviceService, ArticleRepository articleserviceRepository){
+    public ArticleController(ArticleService articleserviceService){
         this.articleserviceService = articleserviceService;
-        this.articleserviceRepository = articleserviceRepository;
     }
 
     @GetMapping("/article")
@@ -39,7 +37,7 @@ public class ArticleController {
 
     @PostMapping("/article")
     public ResponseEntity<ArticleProjection> createArticle(@RequestBody CreateArticleRequestDto createArticleRequestDto){
-        ArticleProjection articleservice = articleserviceService.createArticle(createArticleRequestDto.getAuthor() , createArticleRequestDto.getTitle() , createArticleRequestDto.getContent());
+        ArticleProjection articleservice = articleserviceService.createArticle(createArticleRequestDto.getAuthorEmail() , createArticleRequestDto.getArticleTitle() , createArticleRequestDto.getArticleContent());
         ResponseEntity<ArticleProjection> responseEntity = new ResponseEntity<>(articleservice , HttpStatus.CREATED);
         return responseEntity;
     }
@@ -57,7 +55,7 @@ public class ArticleController {
 
     @PatchMapping("/article/{id}")
     public ResponseEntity<Void> updateArticle(@PathVariable("id") String id , @RequestBody CreateArticleRequestDto createArticleRequestDto){
-        ResponseEntity<Void> responseEntity = articleserviceService.updateArticle(id , createArticleRequestDto.getAuthor() , createArticleRequestDto.getTitle() , createArticleRequestDto.getContent());
+        ResponseEntity<Void> responseEntity = articleserviceService.updateArticle(id , createArticleRequestDto.getAuthorEmail() , createArticleRequestDto.getArticleTitle() , createArticleRequestDto.getArticleContent());
         return responseEntity;
     }
 }
