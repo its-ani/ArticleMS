@@ -7,10 +7,11 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Entity
+@Document
 public class Article extends BaseModel{
     private String title;
     @Column(columnDefinition = "TEXT")

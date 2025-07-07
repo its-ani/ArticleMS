@@ -1,15 +1,25 @@
 spring:
   application:
     name: ArticleService
-  datasource:
-    url: jdbc:mysql://localhost:3307/articlespace
-    username: root
-    password: rootpassword
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+  data:
+    mongodb:
+      uri: mongodb://yash:yash@localhost:27017/article?authSource=admin
+#  datasource:
+#    uri: mongodb://yash:yash@localhost:27017/article?authSource=admin
+#    uri: mongodb://yash:yash@localhost:27017/article
+#    uri: mongodb://admin:admin@localhost:27017/article?authSource=admin
+#    url: jdbc:mysql://localhost:8086/articlespace
+#    username: admin
+#    password: admin
+#    host: localhost
+#    port: 27017
+##    authentication-database: admin
+#    database: article
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
 
 eureka:
   client:

@@ -39,7 +39,7 @@ public class SelfArticleService implements ArticleService{
     }
 
     @Override
-    public ArticleProjection getArticleById(long id) {
+    public ArticleProjection getArticleById(String id) {
         ArticleProjection article = articleRepository.findProjectedById(id);
         if(article == null){
             throw new ArticleNotFoundException();
@@ -71,7 +71,7 @@ public class SelfArticleService implements ArticleService{
     }
 
     @Override
-    public ResponseEntity<Void> deleteArticle(long id) {
+    public ResponseEntity<Void> deleteArticle(String id) {
         if(articleRepository.existsByIdAndIsDeletedFalse(id)){
             Article article = articleRepository.findById(id);
             article.setIsDeleted();
@@ -91,7 +91,7 @@ public class SelfArticleService implements ArticleService{
     }
 
     @Override
-    public ResponseEntity<Void> updateArticle(long id , Author author , String title , String content){
+    public ResponseEntity<Void> updateArticle(String id , Author author , String title , String content){
         if(articleRepository.existsByIdAndIsDeletedFalse(id)){
             Article article = articleRepository.findById(id);
             article.setTitle(title);

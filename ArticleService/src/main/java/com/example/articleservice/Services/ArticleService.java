@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ArticleService {
     List<ArticleProjection> getAllArticles();
-    ArticleProjection getArticleById(long id);
+    ArticleProjection getArticleById(String Id);
     ArticleProjection createArticle(Author author, String title, String content);
-    ResponseEntity<Void> deleteArticle(long id);
+    ResponseEntity<Void> deleteArticle(String Id);
     Pair<List<ArticleProjection> , Pair<Boolean , Integer>> getAllArticles(int pageNo , int pageSize);
-    ResponseEntity<Void> updateArticle(long id , Author author , String title , String content);
+    ResponseEntity<Void> updateArticle(String Id , Author author , String title , String content);
 }

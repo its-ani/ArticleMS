@@ -31,7 +31,7 @@ public class ArticleController {
     }
 
     @GetMapping("/article/{id}")
-    public ResponseEntity<ArticleProjection> getSingleArticle(@PathVariable("id") long id){
+    public ResponseEntity<ArticleProjection> getSingleArticle(@PathVariable("id") String id){
         ArticleProjection articleservice = articleserviceService.getArticleById(id);
         ResponseEntity<ArticleProjection> responseEntity = new ResponseEntity<>(articleservice , HttpStatus.OK);
         return responseEntity;
@@ -45,7 +45,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/article/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable("id") long id){
+    public ResponseEntity<Void> deleteArticle(@PathVariable("id") String id){
         ResponseEntity<Void> responseEntity = articleserviceService.deleteArticle(id);
         return responseEntity;
     }
@@ -56,7 +56,7 @@ public class ArticleController {
     }
 
     @PatchMapping("/article/{id}")
-    public ResponseEntity<Void> updateArticle(@PathVariable("id") long id , @RequestBody CreateArticleRequestDto createArticleRequestDto){
+    public ResponseEntity<Void> updateArticle(@PathVariable("id") String id , @RequestBody CreateArticleRequestDto createArticleRequestDto){
         ResponseEntity<Void> responseEntity = articleserviceService.updateArticle(id , createArticleRequestDto.getAuthor() , createArticleRequestDto.getTitle() , createArticleRequestDto.getContent());
         return responseEntity;
     }
