@@ -28,8 +28,8 @@ public class SelfArticleService implements ArticleService{
     }
 
     @Override
-    public List<ArticleProjection> getAllArticles() throws RuntimeException{
-        List<ArticleProjection> articles =  articleRepository.findAllArticleById();
+    public List<Article> getAllArticles() throws RuntimeException{
+        List<Article> articles =  articleRepository.findAll();
         if(!articles.isEmpty()) {
             return articles;
         }

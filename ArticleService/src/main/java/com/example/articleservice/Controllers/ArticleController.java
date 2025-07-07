@@ -22,9 +22,9 @@ public class ArticleController {
     }
 
     @GetMapping("/article")
-    public ResponseEntity<List<ArticleProjection>> getAllArticles(){
-        List<ArticleProjection> articleservices = articleserviceService.getAllArticles();
-        ResponseEntity<List<ArticleProjection>> responseEntity = new ResponseEntity<>(articleservices , HttpStatus.OK);
+    public ResponseEntity<List<Article>> getAllArticles(){
+        List<Article> articleservices = articleserviceService.getAllArticles();
+        ResponseEntity<List<Article>> responseEntity = new ResponseEntity<>(articleservices , HttpStatus.OK);
         return responseEntity;
     }
 
